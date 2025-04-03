@@ -1,38 +1,85 @@
-.App {
-  text-align: center;
+/* Reset Default Browser Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Prevent Extra Spacing Above Hero */
+html, body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* Fix Root Element */
+#root {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
-.App-header {
-  background-color: #282c34;
+/* Fix Navbar Overlap */
+.navbar {
+  margin: 0;
+  padding: 0;
+  position: relative; /* Ensures no gap above */
+}
+
+/* Fix Hero Section */
+.hero {
+  background-color: orange;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+  padding-top: 0; /* Ensures no unwanted gap */
+  margin-top: 0;
+  position: relative;
+}
+
+/* Fix WhatsApp Button Overflow */
+.whatsapp-button {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #25D366;
   color: white;
+  padding: 10px 15px;
+  border-radius: 50px;
+  font-size: 16px;
+  font-weight: bold;
+  text-decoration: none;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
 }
 
-.App-link {
-  color: #61dafb;
+.whatsapp-button svg {
+  font-size: 24px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+/* Mobile Fixes */
+@media (max-width: 768px) {
+  .whatsapp-button {
+    left: 10px;
+    bottom: 10px;
+    padding: 8px 12px;
+    font-size: 14px;
   }
-  to {
-    transform: rotate(360deg);
+
+  .whatsapp-button svg {
+    font-size: 20px;
   }
 }
