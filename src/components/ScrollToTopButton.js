@@ -1,15 +1,39 @@
 import React, { useState, useEffect } from "react";
+import styled from "styled-components";
+
+const Button = styled.button`
+  position: fixed;
+  bottom: 4vh;
+  right: 4vw;
+  width: 50px;
+  height: 50px;
+  border: none;
+  background: #111;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 999;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  @media (max-width: 768px) {
+    bottom: 5vh;
+    right: 5vw;
+  }
+`;
 
 const ScrollToTopButton = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const toggleVisibility = () => {
-      if (window.scrollY > 300) {
-        setIsVisible(true);
-      } else {
-        setIsVisible(false);
-      }
+      setIsVisible(window.scrollY > 300);
     };
 
     window.addEventListener("scroll", toggleVisibility);
@@ -23,29 +47,11 @@ const ScrollToTopButton = () => {
   return (
     <>
       {isVisible && (
-        <button
-          onClick={scrollToTop}
-          style={{
-            position: "fixed",
-            bottom: "20px",
-            right: "20px",
-            background: "rgba(0, 0, 0, 0.7)",
-            border: "none",
-            borderRadius: "50%",
-            width: "50px",
-            height: "50px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            cursor: "pointer",
-            boxShadow: "0px 4px 6px rgba(0,0,0,0.1)",
-            transition: "opacity 0.3s ease-in-out",
-          }}
-        >
+        <Button onClick={scrollToTop}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="30"
-            height="30"
+            width="24"
+            height="24"
             viewBox="0 0 24 24"
             fill="none"
             stroke="white"
@@ -56,7 +62,7 @@ const ScrollToTopButton = () => {
             <path d="M12 19V5" />
             <polyline points="5 12 12 5 19 12" />
           </svg>
-        </button>
+        </Button>
       )}
     </>
   );
