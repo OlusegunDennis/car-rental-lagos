@@ -28,7 +28,7 @@ const FormContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   min-height: 100vh;
-  padding: 40px 20px;
+  padding: 20px 20px;  // Adjusted padding to reduce space
   position: relative;
   overflow: hidden;
   background: linear-gradient(135deg, #1a1a1a, #2c2c2c);
@@ -72,7 +72,7 @@ const VehicleImage = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('/image/gwagon.jpg');
+  background-image: url('/image/gwagon.jpg'); /* Make sure the path is correct */
   background-size: cover;
   background-position: center;
   border-radius: 16px;
@@ -97,6 +97,7 @@ const FormSection = styled.div`
   order: 2;
   position: relative;
   z-index: 1;
+  margin-top: -30px;  // Adjusted margin to bring the form up
 
   @media (min-width: 1024px) {
     order: 1;
@@ -298,7 +299,9 @@ const BrandLogo = styled.div`
 `;
 
 const CarRentalForm = () => {
-  // Form data state
+  const formRef = useRef();
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -306,56 +309,38 @@ const CarRentalForm = () => {
     rentalDate: "",
     returnDate: "",
     message: "",
-    carType: "", // Optional car type
+    carType: "",
   });
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [error, setError] = useState(null);
-  const formRef = useRef();
-  const successMessageRef = useRef();
 
-  // Get today's date in 'YYYY-MM-DD' format
   const today = new Date().toISOString().split("T")[0];
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    try {
-      setIsSubmitted(true);
-      setError(null);
-      // Simulate a form submission (replace with real submission logic)
-      setTimeout(() => {
-        setIsSubmitted(false);
-        alert("Form Submitted Successfully!");
-        // Reset form fields to empty after submission
-        setFormData({
-          name: "",
-          email: "",
-          phone: "",
-          rentalDate: "",
-          returnDate: "",
-          message: "",
-          carType: "",
-        });
-      }, 3000);
-    } catch (err) {
-      setIsSubmitted(false);
-      setError("An error occurred. Please try again.");
-    }
-  };
+    setIsSubmitted(true);
+    setError(null);
 
-  // Scroll to the success message when form is submitted
-  useEffect(() => {
-    if (isSubmitted && successMessageRef.current) {
-      window.scrollTo({
-        top: successMessageRef.current.offsetTop,
-        behavior: "smooth",
+    // Fake delay to simulate submission
+    setTimeout(() => {
+      setIsSubmitted(false);
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        rentalDate: "",
+        returnDate: "",
+        message: "",
+        carType: "",
       });
-    }
-  }, [isSubmitted]);
+      setError("An error occurred during submission. Please try again.");
+    }, 3000);
+  };
 
   return (
     <FormContainer>
@@ -366,22 +351,17 @@ const CarRentalForm = () => {
       <FormSection>
         <BrandLogo />
         <FormTitle>Book Your Car Now</FormTitle>
-        <StyledForm ref={formRef} onSubmit={handleSubmit}>
+        <StyledForm ref={formRef} action="https://formspree.io/f/mdkepzep" method="POST">
           {error && <ErrorMessage>{error}</ErrorMessage>}
           {isSubmitted && (
-            <SuccessMessage ref={successMessageRef}>
-              <p>
-                Successfully Submitted. If you don't get a response immediately, please call or
-                WhatsApp:
-              </p>
-              <p>
-              +2348069943108</p>
-              <p>
-              +2348032054555</p>
+            <SuccessMessage>
+              <p>Successfully Submitted. If you don't get a response immediately, please call or WhatsApp:</p>
+              <p>+2348069943108</p>
+              <p>+2348032054555</p>
             </SuccessMessage>
           )}
 
-          {/* Form fields */}
+          {/* Form Fields */}
           <InputGroup>
             <InputLabel htmlFor="name">Full Name</InputLabel>
             <StyledInput
@@ -396,7 +376,7 @@ const CarRentalForm = () => {
           </InputGroup>
 
           <InputGroup>
-            <InputLabel htmlFor="email">Email</InputLabel>
+            <InputLabel htmlFor="email">Email Address</InputLabel>
             <StyledInput
               type="email"
               id="email"
@@ -430,8 +410,8 @@ const CarRentalForm = () => {
                 name="rentalDate"
                 value={formData.rentalDate}
                 onChange={handleChange}
+                min={today}
                 required
-                min={today}  // Prevent rental date in the past
               />
             </InputGroup>
 
@@ -443,25 +423,38 @@ const CarRentalForm = () => {
                 name="returnDate"
                 value={formData.returnDate}
                 onChange={handleChange}
+                min={today}
                 required
-                min={today} // Prevent return date in the past
               />
             </InputGroup>
           </DateGroup>
 
           <InputGroup>
-            <InputLabel htmlFor="message">Additional Message</InputLabel>
+            <InputLabel htmlFor="carType">Car Type</InputLabel>
+            <StyledInput
+              type="text"
+              id="carType"
+              name="carType"
+              value={formData.carType}
+              onChange={handleChange}
+              placeholder="Enter car type"
+              required
+            />
+          </InputGroup>
+
+          <InputGroup>
+            <InputLabel htmlFor="message">Message</InputLabel>
             <StyledTextArea
               id="message"
               name="message"
               value={formData.message}
               onChange={handleChange}
-              placeholder="Enter any additional information"
+              placeholder="Additional details or request"
             />
           </InputGroup>
 
           <StyledButton type="submit" disabled={isSubmitted}>
-            {isSubmitted ? "Submitting..." : "Book Now"}
+            {isSubmitted ? "Submitting..." : "Submit"}
           </StyledButton>
         </StyledForm>
       </FormSection>
