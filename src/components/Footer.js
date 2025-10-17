@@ -6,7 +6,6 @@ const Footer = () => {
 
   // Define Nigeria's official colors (same as in Hero.js)
   const primaryGreen = "#038751"; // Nigeria's official green
-  const secondaryGreen = "#026b40"; // Slightly darker shade
   const white = "#FFFFFF";
 
   // State for window width (for responsiveness)

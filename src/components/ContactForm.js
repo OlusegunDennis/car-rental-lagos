@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import styled, { keyframes } from "styled-components";
 
 // Keyframes
@@ -256,28 +256,7 @@ const StyledButton = styled.button`
   }
 `;
 
-const SuccessMessage = styled.div`
-  padding: 20px;
-  margin-top: 20px;
-  background: rgba(76, 175, 80, 0.2);
-  color: #4ce99d;
-  border-radius: 8px;
-  animation: ${fadeIn} 0.5s ease-in-out;
-  text-align: center;
-  border-left: 3px solid #4ce99d;
-  backdrop-filter: blur(5px);
-`;
 
-const ErrorMessage = styled.div`
-  padding: 20px;
-  margin-top: 20px;
-  background: rgba(244, 67, 54, 0.2);
-  color: #ff6b6b;
-  border-radius: 8px;
-  text-align: center;
-  border-left: 3px solid #ff6b6b;
-  backdrop-filter: blur(5px);
-`;
 
 const BrandLogo = styled.div`
   width: 60px;
@@ -300,8 +279,6 @@ const BrandLogo = styled.div`
 
 const CarRentalForm = () => {
   const formRef = useRef();
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -321,26 +298,9 @@ const CarRentalForm = () => {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setIsSubmitted(true);
-    setError(null);
 
-    // Fake delay to simulate submission
-    setTimeout(() => {
-      setIsSubmitted(false);
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        rentalDate: "",
-        returnDate: "",
-        message: "",
-        carType: "",
-      });
-      setError("An error occurred during submission. Please try again.");
-    }, 3000);
-  };
+
+
 
   return (
     <FormContainer>
@@ -352,14 +312,6 @@ const CarRentalForm = () => {
         <BrandLogo />
         <FormTitle>Book Your Car Now</FormTitle>
         <StyledForm ref={formRef} action="https://formspree.io/f/mdkepzep" method="POST">
-          {error && <ErrorMessage>{error}</ErrorMessage>}
-          {isSubmitted && (
-            <SuccessMessage>
-              <p>Successfully Submitted. If you don't get a response immediately, please call or WhatsApp:</p>
-              <p>+2348069943108</p>
-              <p>+2348106691891</p>
-            </SuccessMessage>
-          )}
 
           {/* Form Fields */}
           <InputGroup>
@@ -453,8 +405,8 @@ const CarRentalForm = () => {
             />
           </InputGroup>
 
-          <StyledButton type="submit" disabled={isSubmitted}>
-            {isSubmitted ? "Submitting..." : "Submit"}
+          <StyledButton type="submit">
+            Submit
           </StyledButton>
         </StyledForm>
       </FormSection>

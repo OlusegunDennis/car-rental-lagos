@@ -5,7 +5,6 @@ import { useParams } from "react-router-dom";
 const nigeriaGreen = "#008751";
 // const darkGreen = "#006740";
 const navyBlue = "#1A237E";
-const lightNavy = "#3949AB";
 const white = "#FFFFFF";
 const goldAccent = "#D4AF37";
 
@@ -63,6 +62,8 @@ const CarAlbum = () => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const isMobile = windowWidth <= 768;
 
+  const images = carImages[formattedCarName] || [];
+
   useEffect(() => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
@@ -81,9 +82,7 @@ const CarAlbum = () => {
       setIsLoading(false);
     }, 800);
     return () => clearTimeout(timer);
-  }, [formattedCarName]);
-
-  const images = carImages[formattedCarName] || [];
+  }, [formattedCarName, images.length]);
 
   // Get car name display text
   const displayCarName = formattedCarName
