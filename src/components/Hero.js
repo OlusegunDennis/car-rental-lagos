@@ -26,7 +26,7 @@ const Hero = () => {
 
   const phoneNumbers = [
     { number: "+2348069943108" },
-    { number: "+2348032054555" }
+    { number: "+2348106691891" }
   ];
 
   const email = "info1@carrentalnaija.com";

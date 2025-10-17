@@ -357,7 +357,7 @@ const CarRentalForm = () => {
             <SuccessMessage>
               <p>Successfully Submitted. If you don't get a response immediately, please call or WhatsApp:</p>
               <p>+2348069943108</p>
-              <p>+2348032054555</p>
+              <p>+2348106691891</p>
             </SuccessMessage>
           )}
 
